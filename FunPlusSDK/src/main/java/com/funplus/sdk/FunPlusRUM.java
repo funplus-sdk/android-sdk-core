@@ -84,10 +84,16 @@ public class FunPlusRUM implements IFunPlusRUM, Application.ActivityLifecycleCal
         if (sampler.shouldSendEvent(event)) {
             logAgentClient.trace(event.toString());
             getLogger().i("Trace RUM event: " + event);
-            traceHistory.add(new Pair<>(event.toString(), new Date()));
+
+            if (BuildConfig.DEBUG) {
+                traceHistory.add(new Pair<>(event.toString(), new Date()));
+            }
         } else {
             getLogger().i("Suppress RUM event: " + event);
-            suppressHistory.add(new Pair<>(event.toString(), new Date()));
+
+            if (BuildConfig.DEBUG) {
+                suppressHistory.add(new Pair<>(event.toString(), new Date()));
+            }
         }
     }
 
