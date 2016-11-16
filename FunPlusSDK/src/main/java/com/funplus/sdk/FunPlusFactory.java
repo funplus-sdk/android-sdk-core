@@ -17,7 +17,6 @@ class FunPlusFactory {
     @Nullable private static IFunPlusID funPlusID = null;
     @Nullable private static IFunPlusRUM funPlusRUM = null;
     @Nullable private static IFunPlusData funPlusData = null;
-    @Nullable private static IFunPlusAdjust funPlusAdjust = null;
 
     @Nullable private static RequestQueue requestQueue = null;
     @Nullable private static DeviceInfo deviceInfo = null;
@@ -57,13 +56,6 @@ class FunPlusFactory {
             funPlusData = new FunPlusData(funPlusConfig);
         }
         return funPlusData;
-    }
-
-    @NonNull static IFunPlusAdjust getFunPlusAdjust(@NonNull FunPlusConfig funPlusConfig) {
-        if (funPlusAdjust == null) {
-            funPlusAdjust = new FunPlusAdjust(funPlusConfig);
-        }
-        return funPlusAdjust;
     }
 
     @NonNull static RequestQueue getRequestQueue(@NonNull Context context) {

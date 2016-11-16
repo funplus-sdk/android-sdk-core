@@ -1,5 +1,11 @@
 # Changelog
 
+### V4.0.1-alpha.0
+
+- Remove Adjust SDK.
+- Deprecate the `ConfigManager` class.
+- New `install` API.
+
 ### V4.0.0-alpha.4
 
 * Unity bridge.
@@ -11,4 +17,5 @@
 ### v4.0.0-alpha.2
 
 * Move callbacks of data uploading out of main thread.
+
 

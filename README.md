@@ -25,14 +25,6 @@ FunPlus SDK uses the [Volley Library](https://developer.android.com/training/vo
 compile 'com.android.volley:volley:1.0.0'
 ```
 
-### Add Adjust SDK
-
-FunPlus SDK uses the [Adjust SDK](https://github.com/adjust/android_sdk) to tracks some KPI events. Please add the Adjust SDK to your app if you haven't done so. One way of doing this is to add the following line to the`dependencies` block of the `build.gradle` file:
-
-```groovy
-compile 'com.adjust.sdk:adjust-android:4.10.2'
-```
-
 ### Add Google Play Services
 
 FunPlus SDK uses the [Google Advertising ID](https://support.google.com/googleplay/android-developer/answer/6048248?hl=en) to uniquely identify devices. To allow the SDK to use the Google Advertising ID, you must integrate the [Google Play Services](http://developer.android.com/google/play-services/setup.html). If you haven't done this yet, please open the `build.gradle` file of your app and add the following line to the `dependencies` block:
@@ -63,18 +55,6 @@ FunPlus SDK need to be notified when network connection changes. Add the followi
  </receiver>
 ```
 
-Adjust SDK wrapped inside the FunPlus SDK requires an `INSTALL_REFERRER` receiver. Add the following `receiver` tag too.
-
-```xml
-<receiver
-    android:name="com.adjust.sdk.AdjustReferrerReceiver"
-    android:exported="true" >
-    <intent-filter>
-        <action android:name="com.android.vending.INSTALL_REFERRER" />
-    </intent-filter>
-</receiver>
-```
-
 ### Install the SDK
 
 Completing all the previous steps, now we're ready to install the FunPlus SDK in your app. Please call the SDK's `install()` method as soon as possible once app starts, usually inside the application's `onCreate()` is a good place to do this.
@@ -89,15 +69,12 @@ Application application = "{YourApplicationInstance}";
 Context context = "{YourAppContext}";
 String appId = "{YourAppId}";
 String appKey = "{YourAppKey}";
+String rumTag = "{YourRumTag}";
+String rumKey = "{YourRumKey}";
 SDKEnvironment env = SDKEnvironment.Production;		// Production/Sandbox
 
-try {
-	FunPlusSDK.install(context, appId, appKey, env);
-  	FunPlusSDK.registerActivityLifecycleCallbacks(application);
-} catch (Exception e) {
-  	// Something is wrong?!!
-    // Put your error handling codes here.
-}
+FunPlusSDK.install(context, appId, appKey, rumTag, rumKey, env);
+FunPlusSDK.registerActivityLifecycleCallbacks(application);
 ```
 
 ## Usage
