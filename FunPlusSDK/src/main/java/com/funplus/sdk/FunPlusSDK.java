@@ -76,11 +76,4 @@ public class FunPlusSDK {
         }
         return FunPlusFactory.getFunPlusData(instance.funPlusConfig);
     }
-
-    @NonNull public static IFunPlusAdjust getFunPlusAdjust() {
-        if (instance == null) {
-            Log.e(LOG_TAG, "FunPlus SDK has not been installed yet.");
-        }
-        return FunPlusFactory.getFunPlusAdjust(instance.funPlusConfig);
-    }
 }
