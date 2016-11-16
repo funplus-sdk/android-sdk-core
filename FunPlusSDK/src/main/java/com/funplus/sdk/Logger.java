@@ -83,7 +83,11 @@ class Logger implements ILogger {
         String methodName = caller.getMethodName();
         int line = caller.getLineNumber();
 
-        String callStackSymbols = TextUtils.join("\n", stackTraceElements);
+        String callStackSymbols = "";
+        if (logLevelString.equals("ERROR") || logLevelString.equals("FATAL")) {
+            callStackSymbols = TextUtils.join("\n", stackTraceElements);
+        }
+
         String log = String.format(Locale.US, "[%s %s.%s():%d] %s", logLevelString, className, methodName, line, message);
 
         try {
