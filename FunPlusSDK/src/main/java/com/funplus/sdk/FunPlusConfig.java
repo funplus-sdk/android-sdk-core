@@ -38,10 +38,6 @@ public class FunPlusConfig {
     @NonNull final String dataKey;
     final long dataUploadInterval;
 
-    final boolean adjustEnabled;
-    @NonNull final String adjustAppToken;
-    @NonNull final String adjustAppOpenEventToken;
-
     FunPlusConfig(@NonNull Context context,
                   @NonNull String appId,
                   @NonNull String appKey,
@@ -95,9 +91,5 @@ public class FunPlusConfig {
         dataTag = configDict.getString("data_tag");
         dataKey = configDict.getString("data_key");
         dataUploadInterval = configDict.has("data_upload_interval") ? configDict.getLong("data_upload_interval") : 10;
-
-        adjustEnabled = !configDict.has("adjust_enabled") || configDict.getBoolean("adjust_enabled");
-        adjustAppToken = configDict.has("adjust_app_token") ? configDict.getString("adjust_app_token") : "";
-        adjustAppOpenEventToken = configDict.has("adjust_app_open_event_token") ? configDict.getString("adjust_app_open_event_token") : "";
     }
 }
