@@ -21,7 +21,8 @@ import java.util.TimerTask;
 class LogAgentClient extends HandlerThread implements Application.ActivityLifecycleCallbacks {
     private static final String LOG_TAG = "LogAgentClient";
 
-    private static final long DEFAULT_UPLOAD_INTERVAL = 10;     // 10 seconds
+    private static final int MAX_QUEUE_SIZE = 1024;
+    private static final long DEFAULT_UPLOAD_INTERVAL = 30;     // 30 seconds
 
     interface ProgressHandler {
         /**
@@ -97,6 +98,9 @@ class LogAgentClient extends HandlerThread implements Application.ActivityLifecy
         internalHandler.post(new Runnable() {
             @Override
             public void run() {
+                if (dataQueue.size() > MAX_QUEUE_SIZE) {
+                    dataQueue.remove(0);
+                }
                 dataQueue.add(entry);
             }
         });
