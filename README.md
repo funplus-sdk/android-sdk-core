@@ -6,10 +6,6 @@
 * Android API level 16+
 * Gradle 2.3+
 
-## Example App
-
-There are several example apps inside the `samples` directory. You can open anyone of them to see an example on how the FunPlus SDK can be integrated.
-
 ## Integration
 
 ### Add the SDK to Your Project
