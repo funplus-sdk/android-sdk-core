@@ -17,6 +17,20 @@ public class FunPlusSDK {
     private static FunPlusSDK instance;
     @NonNull private final FunPlusConfig funPlusConfig;
 
+    public static synchronized void install(@NonNull Context context,
+                                            @NonNull String appId,
+                                            @NonNull String appKey,
+                                            @NonNull String rumTag,
+                                            @NonNull String rumKey,
+                                            @NonNull SDKEnvironment environment) {
+        if (instance == null) {
+            FunPlusConfig funPlusConfig = new FunPlusConfig(context, appId, appKey, rumTag, rumKey, environment);
+            instance = new FunPlusSDK(funPlusConfig);
+        } else {
+            Log.w(LOG_TAG, "FunPlus SDK has been installed, there's no need to install it again");
+        }
+    }
+
     public static synchronized void install(@NonNull FunPlusConfig funPlusConfig){
         if (instance == null) {
             Log.i(LOG_TAG, String.format("Installing FunPlus SDK: {sdkVersion=%s, appId=%s, env=%s}", VERSION, funPlusConfig.appId, funPlusConfig.environment));
@@ -26,6 +40,7 @@ public class FunPlusSDK {
         }
     }
 
+    @Deprecated
     public static synchronized void install(@NonNull Context context,
                                             @NonNull String appId,
                                             @NonNull String appKey,

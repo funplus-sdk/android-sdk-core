@@ -8,7 +8,6 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -19,7 +18,12 @@ public class UnityBridge {
 
     private static final String LOG_TAG = "FunPlusUnityBridge";
 
-    public static void install(Application application, String appId, String appKey, String environment) {
+    public static void install(@NonNull Application application,
+                               @NonNull String appId,
+                               @NonNull String appKey,
+                               @NonNull String rumTag,
+                               @NonNull String rumKey,
+                               @NonNull String environment) {
         Log.i(LOG_TAG, "Installing......");
         SDKEnvironment env = SDKEnvironment.construct(environment);
         if (env == null) {
@@ -27,13 +31,8 @@ public class UnityBridge {
             return;
         }
 
-        try {
-            FunPlusSDK.install(application, appId, appKey, env);
-            FunPlusSDK.registerActivityLifecycleCallbacks(application);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e(LOG_TAG, "Failed to install FunPlus SDK, error: " + e.getMessage());
-        }
+        FunPlusSDK.install(application, appId, appKey, rumTag, rumKey, env);
+        FunPlusSDK.registerActivityLifecycleCallbacks(application);
     }
 
     public static void getFPID(@NonNull String externalID,

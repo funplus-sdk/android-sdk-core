@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FunPlusConfig {
+    private static final String LOG_SERVER = "https://logagent.infra.funplus.net/log";
+
     @NonNull final Context context;
     @NonNull final String appId;
     @NonNull final String appKey;
@@ -38,6 +40,42 @@ public class FunPlusConfig {
     @NonNull final String dataKey;
     final long dataUploadInterval;
 
+    FunPlusConfig(@NonNull Context context,
+                  @NonNull String appId,
+                  @NonNull String appKey,
+                  @NonNull String rumTag,
+                  @NonNull String rumKey,
+                  @NonNull SDKEnvironment environment) {
+        this.context = context;
+        this.appId = appId;
+        this.appKey = appKey;
+        this.environment = environment;
+
+        this.configEtag = "deprecated";
+
+        this.loggerEndpoint = LOG_SERVER;
+        this.loggerTag = rumTag;
+        this.loggerKey = rumKey;
+        this.logLevel = environment == SDKEnvironment.Sandbox ? LogLevel.INFO : LogLevel.ERROR;
+        this.loggerUploadInterval = 120;
+
+        this.rumEndpoint = LOG_SERVER;
+        this.rumTag = rumTag;
+        this.rumKey = rumKey;
+        this.rumUploadInterval = 30;
+
+        this.rumSampleRate = 1.0;
+        this.rumEventWhitelist = new ArrayList<>();
+        this.rumUserWhitelist = new ArrayList<>();
+        this.rumUserBlacklist = new ArrayList<>();
+
+        this.dataEndpoint = LOG_SERVER;
+        this.dataTag = appId;
+        this.dataKey = appKey;
+        this.dataUploadInterval = 30;
+    }
+
+    @Deprecated
     FunPlusConfig(@NonNull Context context,
                   @NonNull String appId,
                   @NonNull String appKey,
