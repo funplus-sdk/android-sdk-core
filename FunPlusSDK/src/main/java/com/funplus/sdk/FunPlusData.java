@@ -108,11 +108,6 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
     }
 
     @Override
-    public void traceCustom(@NonNull JSONObject event) {
-        trace(DataEventType.Custom, event);
-    }
-
-    @Override
     public void traceSessionStart() {
         try {
             trace(DataEventType.Kpi, buildDataEvent("session_start"));
@@ -139,6 +134,20 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
             trace(DataEventType.Kpi, buildDataEvent("new_user"));
         } catch (JSONException e) {
             getLogger().e("Error tracing new user event: %s", e.getMessage());
+        }
+    }
+
+    @Override
+    public void traceCustom(@NonNull JSONObject event) {
+        trace(DataEventType.Custom, event);
+    }
+
+    @Override
+    public void traceCustomEventWithNameAndProperties(@NonNull String eventName, @NonNull JSONObject properties) {
+        try {
+            trace(DataEventType.Custom, buildDataEvent(eventName, properties));
+        } catch (JSONException e) {
+            getLogger().e("Error tracing custom event: %s", e.getMessage());
         }
     }
 

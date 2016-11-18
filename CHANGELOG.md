@@ -1,12 +1,19 @@
 # Changelog
 
-### V4.0.1-alpha.0
+### v4.0.1-alpha.1
+
+* `traceCustomEventWithNameAndProperties()`
+* Increase uploading interval.
+* Set maximum data queue size.
+* Remove call stacks from INFO events.
+
+### v4.0.1-alpha.0
 
 - Remove Adjust SDK.
 - Deprecate the `ConfigManager` class.
 - New `install` API.
 
-### V4.0.0-alpha.4
+### v4.0.0-alpha.4
 
 * Unity bridge.
 

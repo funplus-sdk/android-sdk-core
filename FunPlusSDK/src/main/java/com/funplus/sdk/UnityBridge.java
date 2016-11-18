@@ -112,6 +112,16 @@ public class UnityBridge {
         }
     }
 
+    public static void traceCustomEventWithNameAndProperties(@NonNull String eventName, @NonNull String propertiesString) {
+        try {
+            JSONObject properties = new JSONObject(propertiesString);
+            FunPlusSDK.getFunPlusData().traceCustomEventWithNameAndProperties(eventName, properties);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e(LOG_TAG, "Invalid event properties string, error: " + e.getMessage());
+        }
+    }
+
     public static void traceDataPayment(double amount,
                                         @NonNull String currency,
                                         @NonNull String productId,

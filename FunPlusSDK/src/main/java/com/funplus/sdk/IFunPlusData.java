@@ -5,10 +5,11 @@ import org.json.JSONObject;
 public interface IFunPlusData {
     void registerEventTracedListener(FunPlusData.EventTracedListener listener);
 
-    void traceCustom(JSONObject event);
     void traceSessionStart();
     void traceSessionEnd(long sessionLength);
     void traceNewUser();
+    void traceCustom(JSONObject event);
+    void traceCustomEventWithNameAndProperties(String eventName, JSONObject properties);
     void tracePayment(double amount, String currency, String productId,
                       String productName,
                       String productType,
