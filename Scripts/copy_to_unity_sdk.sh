@@ -11,7 +11,7 @@ f=funplus-android-sdk-$ver.jar
 src=Release/funplus-android-sdk-$ver/$f
 target_dir=../../unity/sdk-core/Assets/FunPlusSDK/Plugins/Android
 
-if [ -f $target_dir/funplus-android-sdk* ]; then
+if [ -f $target_dir/funplus-android-sdk*.jar ]; then
     rm $target_dir/funplus-android-sdk*
 fi
 
