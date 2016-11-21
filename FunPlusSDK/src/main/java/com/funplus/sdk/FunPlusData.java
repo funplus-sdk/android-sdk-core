@@ -191,7 +191,7 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
 
         JSONObject dict = new JSONObject();
         dict.put("event", eventName);
-        dict.put("data_version", "1.0");
+        dict.put("data_version", "2.0");
         dict.put("ts", "" + System.currentTimeMillis());
         dict.put("app_id", funPlusConfig.appId);
         dict.put("user_id", sessionManager.getUserId());
