@@ -193,6 +193,8 @@ FunPlusSDK.getFunPlusRUM().setExtraProperty(key, value);
 FunPlusSDK.getFunPlusRUM().eraseExtraProperty(key);
 ```
 
+Keep in mind that a second calling of the `setExtraProperty()` method will override the previous set value.
+
 ### The Data Module
 
 The Data module traces client events and uploads them to FunPlus BI System.
@@ -239,6 +241,8 @@ The event you're passing in to this method is a dictionary. Below is an example:
 FunPlusSDK.getFunPlusData().setExtraProperty(key, value);
 FunPlusSDK.getFunPlusData().eraseExtraProperty(key);
 ```
+
+Keep in mind that a second calling of the `setExtraProperty()` method will override the previous set value.
 
 ## FAQ
 
