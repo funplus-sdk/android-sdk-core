@@ -15,7 +15,7 @@ if [ -f $target_dir/funplus-android-sdk*.jar ]; then
     rm $target_dir/funplus-android-sdk*
 fi
 
-dst=$target_dir/$f
+dst=$target_dir/funplus-android-sdk.jar
 
 cp $src $dst
 
