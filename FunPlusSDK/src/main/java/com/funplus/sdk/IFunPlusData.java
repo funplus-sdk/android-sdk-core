@@ -15,8 +15,8 @@ public interface IFunPlusData {
                       String productType,
                       String transactionId,
                       String paymentProcessor,
-                      String itemsReceived, String currencyReceived,
-                      String currencyReceivedType);
+                      String itemsReceived,
+                      String currencyReceived);
 
     void setExtraProperty(String key, String value);
     void eraseExtraProperty(String key);

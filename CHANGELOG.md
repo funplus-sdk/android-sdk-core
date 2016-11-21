@@ -1,5 +1,12 @@
 # Changelog
 
+### v4.0.1-alpha.2
+
+* Bugfix: data_version=2.0
+* Add install timestamp to data events.
+* Remove `currencyReceivedType` from payment events.
+* Fields correction in payment events.
+
 ### v4.0.1-alpha.1
 
 * `traceCustomEventWithNameAndProperties()`

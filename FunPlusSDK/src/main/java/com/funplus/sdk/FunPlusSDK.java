@@ -2,6 +2,8 @@ package com.funplus.sdk;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -12,10 +14,15 @@ import java.util.List;
 public class FunPlusSDK {
 
     public static final String VERSION = "4.0.1-alpha.1";
+
     private static final String LOG_TAG = "FunPlusSDK";
+    private static final String INSTALL_TS_SAVED_KEY = "com.funplus.sdk.InstallTs";
 
     private static FunPlusSDK instance;
     @NonNull private final FunPlusConfig funPlusConfig;
+
+    // Data events are interested in app's install timestamp.
+    private long installTs;
 
     public static synchronized void install(@NonNull Context context,
                                             @NonNull String appId,
@@ -55,6 +62,17 @@ public class FunPlusSDK {
 
     private FunPlusSDK(@NonNull FunPlusConfig funPlusConfig){
         this.funPlusConfig = funPlusConfig;
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(funPlusConfig.context);
+        installTs = pref.getLong(INSTALL_TS_SAVED_KEY, 0);
+
+        if (installTs == 0) {
+            installTs = System.currentTimeMillis();
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putLong(INSTALL_TS_SAVED_KEY, installTs);
+            editor.apply();
+        }
+
         FunPlusFactory.getLoggerDataConsumer(funPlusConfig);
         FunPlusFactory.getFunPlusID(funPlusConfig);
         FunPlusFactory.getFunPlusRUM(funPlusConfig);
@@ -68,6 +86,10 @@ public class FunPlusSDK {
         for (Application.ActivityLifecycleCallbacks instance : instancesToRegister) {
             application.registerActivityLifecycleCallbacks(instance);
         }
+    }
+
+    static long getInstallTs() {
+        return instance == null ? 0 : instance.installTs;
     }
 
     @NonNull public static IFunPlusID getFunPlusID() {

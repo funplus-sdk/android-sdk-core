@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.Pair;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -160,8 +161,7 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
                              @NonNull String transactionId,
                              @NonNull String paymentProcessor,
                              @NonNull String itemsReceived,
-                             @NonNull String currencyReceived,
-                             @NonNull String currencyReceivedType) {
+                             @NonNull String currencyReceived) {
         try {
             JSONObject customProperties = new JSONObject();
             customProperties.put("amount", amount);
@@ -171,9 +171,8 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
             customProperties.put("product_type", productType);
             customProperties.put("transaction_id", transactionId);
             customProperties.put("payment_processor", paymentProcessor);
-            customProperties.put("c_items_received", itemsReceived);
-            customProperties.put("m_currency_received", currencyReceived);
-            customProperties.put("d_currency_received_type", currencyReceivedType);
+            customProperties.put("c_items_received", new JSONArray(itemsReceived));
+            customProperties.put("c_currency_received", new JSONArray(currencyReceived));
 
             trace(DataEventType.Kpi, buildDataEvent("payment", customProperties));
         } catch (JSONException e) {
@@ -205,6 +204,7 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
         properties.put("os", deviceInfo.osName);
         properties.put("os_version", deviceInfo.osVersion);
         properties.put("lang", deviceInfo.language);
+        properties.put("install_ts", FunPlusSDK.getInstallTs() + "");
 
         // Event properties.
         if (customProperties != null) {

@@ -61,9 +61,13 @@ class DeviceInfo {
             PackageManager pm = context.getPackageManager();
             String name = context.getPackageName();
             PackageInfo info = pm.getPackageInfo(name, 0);
-            return info.versionName + "." + info.versionCode;
+            if (info.versionName != null) {
+                return info.versionName + "." + info.versionCode;
+            } else {
+                return "unknown";
+            }
         } catch (PackageManager.NameNotFoundException e) {
-            return "0.0.0";
+            return "unknown";
         }
     }
 

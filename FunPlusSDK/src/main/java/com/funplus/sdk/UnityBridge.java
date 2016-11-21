@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Method;
 
 /**
- * Created by yuankun on 25/10/2016.
+ * The `UnityBridge` class is a wrapper layer that exposes native APIs to Unity layer.
  */
 
 public class UnityBridge {
@@ -130,8 +130,7 @@ public class UnityBridge {
                                         @NonNull String transactionId,
                                         @NonNull String paymentProcessor,
                                         @NonNull String itemsReceived,
-                                        @NonNull String currencyReceived,
-                                        @NonNull String currencyReceivedType) {
+                                        @NonNull String currencyReceived) {
         FunPlusSDK.getFunPlusData().tracePayment(
                 amount,
                 currency,
@@ -141,8 +140,7 @@ public class UnityBridge {
                 transactionId,
                 paymentProcessor,
                 itemsReceived,
-                currencyReceived,
-                currencyReceivedType
+                currencyReceived
         );
     }
 
