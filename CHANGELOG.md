@@ -6,6 +6,7 @@
 * Add install timestamp to data events.
 * Remove `currencyReceivedType` from payment events.
 * Fields correction in payment events.
+* Automatically trace `new_user` events.
 
 ### v4.0.1-alpha.1
 

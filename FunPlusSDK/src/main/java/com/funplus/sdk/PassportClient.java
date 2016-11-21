@@ -98,6 +98,18 @@ class PassportClient {
 
                     if (!fpid.equals(currentFPID)) {
                         updateFPID(fpid);
+                    } else {
+                        boolean isNew;
+
+                        try {
+                            isNew = data.getBoolean("is_new");
+                        } catch (JSONException e) {
+                            isNew = false;
+                        }
+
+                        if (isNew) {
+                            FunPlusFactory.getFunPlusData(funPlusConfig).traceNewUser();
+                        }
                     }
 
                     completion.onSuccess(fpid);
