@@ -6,12 +6,32 @@
 * Android API level 16+
 * Gradle 2.3+
 
+## Table of Contents
+
+* [Integration](#integration)
+  * [Add the SDK to Your Project](#add-the-sdk-to-your-project)
+  * [Add Volley Library](#add-volley-library)
+  * [Add Google Play Services](#add-google-play-services)
+  * [Add Permissions](#add-permissions)
+  * [Add Broadcast Receiver](#add-broadcast-receiver)
+  * [Install the SDK](#install-the-sdk)
+* [Usage](#usage)
+  * [The ID Module](#the-id-module)
+    * [Get an FPID Based on a Given User ID](get-an-fpid-based-on-a-given-user-id)
+    * [Bind a New User ID to an Existing FPID](#bind-a-new-user-id-to-an-existing-fpid)
+  * [The RUM Module](#the-rum-module)
+    - [Trace a Service Monitoring Event](#trace-a-service-monitoring-event)
+    - [Set Extra Properties to RUM Events](#set-extra-properties-to-rum-events)
+  * [The Data Module](#the-data-module)
+    - [Trace Custom Events](#trace-custom-events)
+    - [Set Extra Properties to Data Events](#set-extra-properties-to-data-events)
+* [FAQ](#faq)
+
 ## Integration
 
 ### Add the SDK to Your Project
 
-1. Add the `funplus-android-sdk-<version>.jar` file to your app and set as dependency.
-2. Add the `funsdk-default-config-<app>.json` file to your project's `assets` directory and rename it to `funsdk-default-config.json`.
+Add the `funplus-android-sdk-<version>.jar` file to your app and set as dependency.
 
 ### Add Volley Library
 
@@ -79,7 +99,7 @@ FunPlusSDK.registerActivityLifecycleCallbacks(application);
 
 The objective of the ID module is to provide a unified ID for each unique user and consequently make it possible to identify users across all FunPlus services (marketing, payment, etc). Note that the ID module can not be treated as an account module, therefore you cannot use this module to complete common account functionalities such as registration and logging in.
 
-**Get an FPID based on a given user ID**
+#### Get an FPID Based on a Given User ID
 
 ```java
 import com.funplus.sdk.FunPlusID;
@@ -115,7 +135,7 @@ public void get(String externalID,
                 FunPlusIDHandler completion);
 ```
 
-**Bind a new user ID to an existing FPID**
+#### Bind a New User ID to an Existing FPID
 
 ```java
 import com.funplus.sdk.FunPlusID;
@@ -127,7 +147,7 @@ FunPlusSDK.getFunPlusID().bind(fpid, externalID, externalIDType, completionHandl
 
 The RUM module monitors user's actions in real-time and uploads collected data to Log Agent.
 
-**Trace a `service_monitoring` event**
+#### Trace a Service Monitoring Event
 
 ```java
 FunPlusSDK.getFunPlusRUM().traceServiceMonitoring(...);
@@ -164,7 +184,7 @@ public void traceServiceMonitoring(String serviceName,
                                    String gameServerId)
 ```
 
-**Set extra properties to RUM events**
+#### Set Extra Properties to RUM Events
 
 Sometimes you might want to attach extra properties to RUM events. You can set string properties by calling the `setExtraProperty()` method. Note that you can set more than one extra property by calling this method multiple times. Once set, these properties will be stored and attached to every RUM events. You can call the `eraseExtraProperty()` to erase one property.
 
@@ -177,7 +197,43 @@ FunPlusSDK.getFunPlusRUM().eraseExtraProperty(key);
 
 The Data module traces client events and uploads them to FunPlus BI System.
 
-**Set extra properties to Data events**
+The SDK traces following KPI events automatically:
+
+- session_start
+- session_end
+- new_user
+- payment
+
+#### Trace Custom Events
+
+```java
+FunPlusSDK.getFunPlusData().traceCustom(event)
+```
+
+Besides those four KPI events, you might want to trace some custom events. Call the `traceCustom()` method to achieve this task.
+
+The event you're passing in to this method is a dictionary. Below is an example:
+
+```json
+{
+    "app_id": "{YourAppId}",
+    "data_version": "2.0",
+    "event": "level_up",
+    "user_id": "{UserId}",
+    "session_id": "{SessionId}",
+    "ts": "{Timestamp(millisecond)}",
+    "properties": {
+        "app_version": "{YourAppId}",
+        "os": "{android or ios}",
+        "os_version": "{OsVersion}",
+        "device": "{DeviceName}",
+        "lang": "{LanguageCode, for example: 'en'}",
+        "install_ts": "{Timestamp(millisecond)}",
+        "other_properties": "..."
+    }
+```
+
+#### Set Extra Properties to Data Events
 
 ```java
 FunPlusSDK.getFunPlusData().setExtraProperty(key, value);
@@ -185,3 +241,21 @@ FunPlusSDK.getFunPlusData().eraseExtraProperty(key);
 ```
 
 ## FAQ
+
+**Q: Why the hell is the parameter list of  `traceServiceMonitoring()` so long?**
+
+A: Please consult RUM team on that :)
+
+**Q: What is `bindFPID()` for and when should I use it?**
+
+A: In most cases you are not gonna use this method. For cases that one player binds his/her game account to different social accounts, you need to call this method.
+
+Below is an example:
+
+```java
+string fpid = FunPlusSDK.getFunPlusID().getFPID("testuser@funplus.com", ExternalIDType.Email, ...);
+
+// When player binds his/her account with Facebook.
+FunPlusSDK.getFunPlusID().bindFPID(fpid, "fb1234", ExternalIDType.FacebookID, ...);
+```
+
