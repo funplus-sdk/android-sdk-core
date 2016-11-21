@@ -8,7 +8,7 @@ fi
 ver=$(grep "VERSION = " FunPlusSDK/src/main/java/com/funplus/sdk/FunPlusSDK.java | sed "s/public static final String VERSION = //g" | tr -d ' ;"')
 f=funplus-android-sdk-$ver.jar
 
-src=Release/funplus-android-sdk-$ver/$f
+src=Release/$f
 target_dir=../../unity/sdk-core/Assets/FunPlusSDK/Plugins/Android
 
 if [ -f $target_dir/funplus-android-sdk*.jar ]; then
