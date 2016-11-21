@@ -166,9 +166,9 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
             JSONObject customProperties = new JSONObject();
             customProperties.put("amount", amount);
             customProperties.put("currency", currency);
-            customProperties.put("product_id", productId);
-            customProperties.put("product_name", productName);
-            customProperties.put("product_type", productType);
+            customProperties.put("iap_product_id", productId);
+            customProperties.put("iap_product_name", productName);
+            customProperties.put("iap_product_type", productType);
             customProperties.put("transaction_id", transactionId);
             customProperties.put("payment_processor", paymentProcessor);
             customProperties.put("c_items_received", new JSONArray(itemsReceived));

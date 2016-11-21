@@ -165,9 +165,9 @@ public class FunPlusDataTest {
         assertNotNull(properties.getString("install_ts"));
         assertNotNull(properties.getDouble("amount"));
         assertNotNull(properties.getString("currency"));
-        assertNotNull(properties.getString("product_id"));
-        assertNotNull(properties.getString("product_name"));
-        assertNotNull(properties.getString("product_type"));
+        assertNotNull(properties.getString("iap_product_id"));
+        assertNotNull(properties.getString("iap_product_name"));
+        assertNotNull(properties.getString("iap_product_type"));
         assertNotNull(properties.getString("transaction_id"));
         assertNotNull(properties.getString("payment_processor"));
         assertNotNull(properties.getJSONArray("c_items_received"));
