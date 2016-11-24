@@ -14,6 +14,7 @@ import java.util.Locale;
 
 class Logger implements ILogger {
     private static final String LOG_TAG = "FunPlusSDK";
+    private static final int MAX_QUEUE_SIZE = 1024;
 
     @NonNull private final FunPlusConfig funPlusConfig;
     @NonNull private final LogLevel logLevel;
@@ -93,6 +94,9 @@ class Logger implements ILogger {
         try {
             JSONObject entry = buildLogEntry(logLevelString, log, callStackSymbols);
             synchronized (this) {
+                if (logs.size() > MAX_QUEUE_SIZE) {
+                    logs.remove(0);
+                }
                 logs.add(entry.toString());
             }
         } catch (JSONException e) {

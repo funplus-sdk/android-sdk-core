@@ -77,7 +77,7 @@ public class FunPlusRUM implements IFunPlusRUM, Application.ActivityLifecycleCal
         }
 
         FunPlusFactory.getActivityLifecycleCallbacksProxy().add(this);
-        getLogger().i(LOG_TAG, "FunPlusRUM ready to work");
+        getLogger().i("FunPlusRUM ready to work");
     }
 
     private void trace(@NonNull JSONObject event) {

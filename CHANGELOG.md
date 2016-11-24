@@ -1,5 +1,10 @@
 # Changelog
 
+### v4.0.1
+
+* Increase SDK logs uploading interval.
+* Set maximum queue size for SDK logs.
+
 ### v4.0.1-alpha.2
 
 * Bugfix: data_version=2.0

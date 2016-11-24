@@ -16,7 +16,7 @@ class LoggerDataConsumer implements Application.ActivityLifecycleCallbacks {
     private static final String LOG_TAG = "LoggerDataConsumer";
 
     private static final String LOG_AGENT_LABEL = "com.funplus.sdk.Logger";
-    private static final long CONSUME_INTERVAL = 10;
+    private static final long CONSUME_INTERVAL = 60;    // 60 seconds
 
     @NonNull private final FunPlusConfig funPlusConfig;
     @NonNull private final LogAgentClient logAgentClient;
