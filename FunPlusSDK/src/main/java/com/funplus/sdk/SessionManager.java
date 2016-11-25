@@ -45,27 +45,14 @@ class SessionManager implements ISessionManager, Application.ActivityLifecycleCa
         return sessionId;
     }
 
-    private void startSession() {
-        this.sessionStartTs = System.currentTimeMillis() / 1000;    // milliseconds -> seconds
-
-        String appIdJoinUserId = String.format(Locale.US, "%-23s", funPlusConfig.appId + "-" + userId).replace(' ', '0');
-        this.sessionId = String.format(Locale.US, "a%s%d", appIdJoinUserId, sessionStartTs);
-
-        Log.i(LOG_TAG, String.format(Locale.US, "Start session: {userId=%s, sessionId=%s}", userId, sessionId));
-
-        for (SessionStatusChangeListener listener : listeners) {
-            listener.onSessionStarted(userId, sessionId, sessionStartTs);
-        }
-    }
-
-    private void startSessionForNewUserId(@NonNull String userId) {
+    private void startSession(@NonNull String userId) {
         this.userId = userId;
         this.sessionStartTs = System.currentTimeMillis() / 1000;    // milliseconds -> seconds
 
         String appIdJoinUserId = String.format(Locale.US, "%-23s", funPlusConfig.appId + "-" + userId).replace(' ', '0');
         this.sessionId = String.format(Locale.US, "a%s%d", appIdJoinUserId, sessionStartTs);
 
-        Log.i(LOG_TAG, String.format(Locale.US, "Start session for new user ID: {userId=%s, sessionId=%s}", userId, sessionId));
+        Log.i(LOG_TAG, String.format(Locale.US, "Start session: {userId=%s, sessionId=%s}", userId, sessionId));
 
         for (SessionStatusChangeListener listener : listeners) {
             listener.onSessionStarted(userId, sessionId, sessionStartTs);
@@ -91,7 +78,7 @@ class SessionManager implements ISessionManager, Application.ActivityLifecycleCa
     @Override
     public void onUserIdChanged(@NonNull String newUserId) {
         endSession();
-        startSessionForNewUserId(newUserId);
+        startSession(newUserId);
     }
 
     @Override
@@ -106,7 +93,7 @@ class SessionManager implements ISessionManager, Application.ActivityLifecycleCa
 
     @Override
     public void onActivityResumed(Activity activity) {
-        startSession();
+        startSession(this.userId);
     }
 
     @Override
