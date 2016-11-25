@@ -98,7 +98,7 @@ class PassportClient {
 
                     if (!fpid.equals(currentFPID)) {
                         updateFPID(fpid);
-                    } else {
+
                         boolean isNew;
 
                         try {
