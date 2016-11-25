@@ -13,7 +13,7 @@ echo Output destination: $out
 
 # check output directory.
 if [ -f $out ]; then
-    read -p 'Jar file exists. This action will erase the existing directory, are you sure? [yN] ' yn
+    read -p 'Jar file exists. This action will erase the existing file, are you sure? [yN] ' yn
     if [[ $yn != 'y' && $yn != 'Y' ]]; then
         echo exit
         exit
