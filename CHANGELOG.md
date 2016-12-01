@@ -1,5 +1,10 @@
 # Changelog
 
+### v4.0.2-alpha.0
+
+* Bugfix: wrong behavior for `traceNewUser()`.
+* Remove method `startSessionForNewUserId()`.
+
 ### v4.0.1
 
 * Increase SDK logs uploading interval.
