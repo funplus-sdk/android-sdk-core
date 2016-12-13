@@ -1,5 +1,9 @@
 # Changelog
 
+### v4.0.2-alpha.2
+
+* Bugfix: same label for data kpi and custom tracker.
+
 ### v4.0.2-alpha.1
 
 * Modify upload interval: 5s for sandbox and 10s for production.
