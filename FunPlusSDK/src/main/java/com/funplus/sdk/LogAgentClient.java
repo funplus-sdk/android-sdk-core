@@ -204,7 +204,6 @@ class LogAgentClient extends HandlerThread implements Application.ActivityLifecy
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        stopTimer();
         archive();
     }
 
