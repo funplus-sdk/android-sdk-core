@@ -13,7 +13,7 @@ import java.util.List;
 
 public class FunPlusSDK {
 
-    public static final String VERSION = "4.0.2-alpha.0";
+    public static final String VERSION = "4.0.2-alpha.1";
 
     private static final String LOG_TAG = "FunPlusSDK";
     private static final String INSTALL_TS_SAVED_KEY = "com.funplus.sdk.InstallTs";

@@ -1,5 +1,10 @@
 # Changelog
 
+### v4.0.2-alpha.1
+
+* Modify upload interval: 5s for sandbox and 10s for production.
+* Modify max queue size to 2000.
+
 ### v4.0.2-alpha.0
 
 * Bugfix: wrong behavior for `traceNewUser()`.
