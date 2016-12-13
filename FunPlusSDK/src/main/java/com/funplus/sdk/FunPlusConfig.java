@@ -62,7 +62,7 @@ public class FunPlusConfig {
         this.rumEndpoint = LOG_SERVER;
         this.rumTag = rumTag;
         this.rumKey = rumKey;
-        this.rumUploadInterval = environment == SDKEnvironment.Sandbox ? 30 : 2 * 60;
+        this.rumUploadInterval = environment == SDKEnvironment.Sandbox ? 5 : 10;
 
         this.rumSampleRate = 1.0;
         this.rumEventWhitelist = new ArrayList<>();
@@ -72,7 +72,7 @@ public class FunPlusConfig {
         this.dataEndpoint = LOG_SERVER;
         this.dataTag = appId;
         this.dataKey = appKey;
-        this.dataUploadInterval = environment == SDKEnvironment.Sandbox ? 30 : 2 * 60;
+        this.dataUploadInterval = environment == SDKEnvironment.Sandbox ? 5 : 10;
     }
 
     @Deprecated
