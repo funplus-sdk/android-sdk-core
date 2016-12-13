@@ -1,5 +1,9 @@
 # Changelog
 
+### v4.0.2-alpha.3
+
+* Bugfix: should not stopTimer() when activity destroying.
+
 ### v4.0.2-alpha.2
 
 * Bugfix: same label for data kpi and custom tracker.
