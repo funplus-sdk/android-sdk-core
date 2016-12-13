@@ -52,14 +52,14 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
         String key = funPlusConfig.dataKey;
         long uploadInterval = funPlusConfig.dataUploadInterval;
 
-        this.kpiLogAgentClient = new LogAgentClient(funPlusConfig, LOGGER_LABEL, endpoint, tag + ".core", key, new LogAgentClient.ProgressHandler() {
+        this.kpiLogAgentClient = new LogAgentClient(funPlusConfig, LOGGER_LABEL + ".core", endpoint, tag + ".core", key, new LogAgentClient.ProgressHandler() {
             @Override
             public void onProgress(boolean status, int total, int uploaded) {
                 Log.i(LOG_TAG, String.format(Locale.US, "Uploading data KPI events in progress: {total=%d, uploaded=%d}", total, uploaded));
             }
         }, uploadInterval);
 
-        this.customLogAgentClient = new LogAgentClient(funPlusConfig, LOGGER_LABEL, endpoint, tag + ".custom", key, new LogAgentClient.ProgressHandler() {
+        this.customLogAgentClient = new LogAgentClient(funPlusConfig, LOGGER_LABEL + ".custom", endpoint, tag + ".custom", key, new LogAgentClient.ProgressHandler() {
             @Override
             public void onProgress(boolean status, int total, int uploaded) {
                 Log.i(LOG_TAG, String.format(Locale.US, "Uploading data custom events in progress: {total=%d, uploaded=%d}", total, uploaded));
