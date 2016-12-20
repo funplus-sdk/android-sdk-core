@@ -26,6 +26,7 @@
   * [The Data Module](#the-data-module)
     - [Trace Custom Events](#trace-custom-events)
     - [Set Extra Properties to Data Events](#set-extra-properties-to-data-events)
+    - [Manually trace session events](#manually-trace-session-events)
 * [FAQ](#faq)
 
 ## Integration
@@ -282,6 +283,20 @@ FunPlusSDK.getFunPlusData().eraseExtraProperty(key);
 ```
 
 Keep in mind that a second calling of the `setExtraProperty()` method will override the previous set value.
+
+#### Manually trace session events
+
+By default, SDK automatically traces the `session_start` and `session_end` events. This behavior can be changed by override the `dataAutoTraceSessionEvents` config value to false.
+
+Then you need to manually trace these events.
+
+```java
+FunPlusSDK.getFunPlusData().traceSessionStart();
+...
+FunPlusSDK.getFunPlusData().traceSessionEnd(long sessionLength);
+```
+
+Note that don't manually trace these events when `dataAutoTraceSessionEvents` is set to true.
 
 ## FAQ
 
