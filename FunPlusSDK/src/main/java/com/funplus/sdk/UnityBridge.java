@@ -5,10 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 /**
  * The `UnityBridge` class is a wrapper layer that exposes native APIs to Unity layer.
@@ -24,7 +26,7 @@ public class UnityBridge {
                                @NonNull String rumTag,
                                @NonNull String rumKey,
                                @NonNull String environment) {
-        Log.i(LOG_TAG, "Installing......");
+        Log.i(LOG_TAG, "FunPlusSDK Installing......");
         SDKEnvironment env = SDKEnvironment.construct(environment);
         if (env == null) {
             Log.e(LOG_TAG, "Cannot resolve the `environment` parameter");
@@ -33,6 +35,67 @@ public class UnityBridge {
 
         FunPlusSDK.install(application, appId, appKey, rumTag, rumKey, env);
         FunPlusSDK.registerActivityLifecycleCallbacks(application);
+    }
+
+    public static void install(@NonNull Application application,
+                               @NonNull String appId,
+                               @NonNull String appKey,
+                               @NonNull String rumTag,
+                               @NonNull String rumKey,
+                               @NonNull String environment,
+                               long loggerUploadInterval,
+                               long rumUploadInterval,
+                               double rumSampleRate,
+                               @NonNull String rumEventWhitelistString,
+                               @NonNull String rumUserWhitelistString,
+                               @NonNull String rumUserBlacklistString,
+                               long dataUploadInterval,
+                               boolean dataAutoTraceSessionEvents) {
+        Log.i(LOG_TAG, "FunPlusSDK Installing......");
+        SDKEnvironment env = SDKEnvironment.construct(environment);
+        if (env == null) {
+            Log.e(LOG_TAG, "Cannot resolve the `environment` parameter");
+            return;
+        }
+
+        try {
+            JSONArray rumEventWhitelistJsonArray = new JSONArray(rumEventWhitelistString);
+            JSONArray rumUserWhitelistJsonArray = new JSONArray(rumUserWhitelistString);
+            JSONArray rumUserBlacklistJsonArray = new JSONArray(rumUserBlacklistString);
+
+            ArrayList<String> rumEventWhitelist = new ArrayList<>();
+            for (int i = 0; i < rumEventWhitelistJsonArray.length(); i++) {
+                rumEventWhitelist.add(rumEventWhitelistJsonArray.getString(i));
+            }
+
+            ArrayList<String> rumUserWhitelist = new ArrayList<>();
+            for (int i = 0; i < rumUserWhitelistJsonArray.length(); i++) {
+                rumUserWhitelist.add(rumUserWhitelistJsonArray.getString(i));
+            }
+
+            ArrayList<String> rumUserBlacklist = new ArrayList<>();
+            for (int i = 0; i < rumUserBlacklistJsonArray.length(); i++) {
+                rumUserBlacklist.add(rumUserBlacklistJsonArray.getString(i));
+            }
+
+            FunPlusConfig funPlusConfig = new FunPlusConfig(application, appId, appKey, rumTag, rumKey, env);
+
+            funPlusConfig.setLoggerUploadInterval(loggerUploadInterval)
+                    .setRumUploadInterval(rumUploadInterval)
+                    .setRumSampleRate(rumSampleRate)
+                    .setRumEventWhitelist(rumEventWhitelist)
+                    .setRumUserWhitelist(rumUserWhitelist)
+                    .setRumUserBlacklist(rumUserBlacklist)
+                    .setDataUploadInterval(dataUploadInterval)
+                    .setDataAutoTraceSessionEvents(dataAutoTraceSessionEvents)
+                    .end();
+
+            FunPlusSDK.install(funPlusConfig);
+            FunPlusSDK.registerActivityLifecycleCallbacks(application);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e(LOG_TAG, "Invalid parameter(s)");
+        }
     }
 
     public static void getFPID(@NonNull String externalID,
