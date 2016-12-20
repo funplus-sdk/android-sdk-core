@@ -112,4 +112,11 @@ public class FunPlusSDK {
         }
         return FunPlusFactory.getFunPlusData(instance.funPlusConfig);
     }
+
+    @NonNull protected static FunPlusConfig getFunPlusConfig() {
+        if (instance == null) {
+            Log.e(LOG_TAG, "FunPlus SDK has not been installed yet.");
+        }
+        return instance.funPlusConfig;
+    }
 }
