@@ -74,7 +74,9 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
             }
         }
 
-        FunPlusFactory.getSessionManager(funPlusConfig).registerListener(this);
+        if (funPlusConfig.dataAutoTraceSessionEvents) {
+            FunPlusFactory.getSessionManager(funPlusConfig).registerListener(this);
+        }
 
         Log.i(LOG_TAG, "FunPlusData ready to work");
     }
