@@ -23,24 +23,26 @@ public class FunPlusConfig {
     @NonNull final String loggerTag;
     @NonNull final String loggerKey;
     @NonNull final LogLevel logLevel;
-    final long loggerUploadInterval;
+    long loggerUploadInterval;
 
     @NonNull final String rumEndpoint;
     @NonNull final String rumTag;
     @NonNull final String rumKey;
-    final long rumUploadInterval;
+    long rumUploadInterval;
 
-    final double rumSampleRate;
-    @NonNull final List<String> rumEventWhitelist;
-    @NonNull final List<String> rumUserWhitelist;
-    @NonNull final List<String> rumUserBlacklist;
+    double rumSampleRate;
+    @NonNull List<String> rumEventWhitelist;
+    @NonNull List<String> rumUserWhitelist;
+    @NonNull List<String> rumUserBlacklist;
 
     @NonNull final String dataEndpoint;
     @NonNull final String dataTag;
     @NonNull final String dataKey;
-    final long dataUploadInterval;
+    long dataUploadInterval;
 
-    FunPlusConfig(@NonNull Context context,
+    boolean dataAutoTraceSessionEvents;
+
+    public FunPlusConfig(@NonNull Context context,
                   @NonNull String appId,
                   @NonNull String appKey,
                   @NonNull String rumTag,
@@ -73,6 +75,8 @@ public class FunPlusConfig {
         this.dataTag = appId;
         this.dataKey = appKey;
         this.dataUploadInterval = environment == SDKEnvironment.Sandbox ? 5 : 10;
+
+        dataAutoTraceSessionEvents = true;
     }
 
     @Deprecated
@@ -129,5 +133,55 @@ public class FunPlusConfig {
         dataTag = configDict.getString("data_tag");
         dataKey = configDict.getString("data_key");
         dataUploadInterval = configDict.has("data_upload_interval") ? configDict.getLong("data_upload_interval") : 10;
+
+        dataAutoTraceSessionEvents = true;
+    }
+
+    public FunPlusConfig setLoggerUploadInterval(long value) {
+        loggerUploadInterval = value;
+        return this;
+    }
+
+    public FunPlusConfig setRumUploadInterval(long value) {
+        rumUploadInterval = value;
+        return this;
+    }
+
+    public FunPlusConfig setRumSampleRate(double value) {
+        rumSampleRate = value;
+        return this;
+    }
+
+    public FunPlusConfig setRumEventWhitelist(@NonNull List<String> value) {
+        rumEventWhitelist = value;
+        return this;
+    }
+
+    public FunPlusConfig setRumUserWhitelist(@NonNull List<String> value) {
+        rumUserWhitelist = value;
+        return this;
+    }
+
+    public FunPlusConfig setRumUserBlacklist(@NonNull List<String> value) {
+        rumUserBlacklist = value;
+        return this;
+    }
+
+    public FunPlusConfig setDataUploadInterval(long value) {
+        dataUploadInterval = value;
+        return this;
+    }
+
+    public FunPlusConfig setDataAutoTraceSessionEvents(boolean value) {
+        dataAutoTraceSessionEvents = value;
+        return this;
+    }
+
+    /**
+     * This method should be called at the end of the settings chain.
+     * It is just a stub.
+     */
+    public void end() {
+        // Do nothing
     }
 }
