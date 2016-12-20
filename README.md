@@ -15,6 +15,7 @@
   * [Add Permissions](#add-permissions)
   * [Add Broadcast Receiver](#add-broadcast-receiver)
   * [Install the SDK](#install-the-sdk)
+  * [Config the SDK](#config-the-sdk)
 * [Usage](#usage)
   * [The ID Module](#the-id-module)
     * [Get an FPID Based on a Given User ID](get-an-fpid-based-on-a-given-user-id)
@@ -92,6 +93,44 @@ SDKEnvironment env = SDKEnvironment.Production;		// Production/Sandbox
 FunPlusSDK.install(context, appId, appKey, rumTag, rumKey, env);
 FunPlusSDK.registerActivityLifecycleCallbacks(application);
 ```
+
+### Config the SDK
+
+You may want to override SDK's default config values. In such a case, you need to initialize the SDK in a different way, as the following code snippet illustrates.
+
+```java
+import com.funplus.sdk.FunPlusSDK;
+import com.funplus.sdk.SDKEnvironment;
+
+Application application = "{YourApplicationInstance}";
+Context context = "{YourAppContext}";
+String appId = "{YourAppId}";
+String appKey = "{YourAppKey}";
+String rumTag = "{YourRumTag}";
+String rumKey = "{YourRumKey}";
+SDKEnvironment env = SDKEnvironment.Production;		// Production/Sandbox
+
+FunPlusConfig funPlusConfig = new FunPlusConfig(context, appId, appKey, rumTag, rumKey, env);
+
+funPlusConfig.setRumUploadInterval(10)
+  			.setDataAutoTraceSessionEvents(false)
+  			.end();
+
+FunPlusSDK.install(funPlusConfig);
+FunPlusSDK.registerActivityLifecycleCallbacks(application);
+```
+
+Here's all the config values that can be overrided.
+
+| name                       | type     | description                              |
+| -------------------------- | -------- | ---------------------------------------- |
+| rumUploadInterval          | Int64    | This value indicates a time interval to trigger a RUM events uploading process. Default is 30. |
+| rumSampleRate              | Double   | This value indicates percentage of RUM events to be traced for sampling. Default is 1.0. |
+| rumEventWhitelist          | [String] | RUM events in this array will always be traced. Default is an empty array. |
+| rumUserWhitelist           | [String] | RUM events produced by users in this array will always be traced. Default is an empty array. |
+| rumUserBlacklist           | [String] | RUM events produced by users in this array will never be traced. `rumUesrWhitelist` will be checked before this array. Default is an empty array. |
+| dataUploadInterval         | Int64    | This value indicates a time interval to trigger a Data events uploading process. Default is 30. |
+| dataAutoTraceSessionEvents | Bool     | If set true, SDK will automatically trace `session_start` and `session_end` events. Default is true. |
 
 ## Usage
 
