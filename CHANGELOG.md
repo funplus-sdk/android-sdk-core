@@ -1,5 +1,11 @@
 # Changelog
 
+### v4.0.3
+
+* Bugfix: sychronized getter methods for `FunPlusFactory`.
+* Feature: builder pattern for `FunPlusConfig`.
+* Feature: ability to turn off auto tracing of session events.
+
 ### v4.0.2-alpha.3
 
 * Bugfix: should not stopTimer() when activity destroying.
