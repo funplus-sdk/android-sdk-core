@@ -24,9 +24,11 @@
     - [Trace a Service Monitoring Event](#trace-a-service-monitoring-event)
     - [Set Extra Properties to RUM Events](#set-extra-properties-to-rum-events)
   * [The Data Module](#the-data-module)
-    - [Trace Custom Events](#trace-custom-events)
-    - [Set Extra Properties to Data Events](#set-extra-properties-to-data-events)
-    - [Manually trace session events](#manually-trace-session-events)
+    * [Session Starts and Ends](#session-starts-and-ends)
+    * [The Payment Event](#the-payment-event)
+    * [Trace a Custom Event](#trace-a-custom-event)
+    * [Set Extra Properties to Data Events](#set-extra-properties-to-data-events)
+    * [Manually trace session events](#manually-trace-session-events)
 * [FAQ](#faq)
 
 ## Integration
@@ -239,17 +241,96 @@ Keep in mind that a second calling of the `setExtraProperty()` method will overr
 
 The Data module traces client events and uploads them to FunPlus BI System.
 
-The SDK traces following KPI events automatically:
+#### Session Starts and Ends
 
-- session_start
-- session_end
-- new_user
-- payment
-
-#### Trace Custom Events
+Note: If the `dataAutoTraceSessionEvents` configuration field is set to `true`, SDK will trace `session_start` and `session_end` event automatically.
 
 ```java
-FunPlusSDK.getFunPlusData().traceCustom(event)
+FunPlusSDK.getFunPlusData().traceSessionStart();
+FunPlusSDK.getFunPlusData().traceSessionEnd(long sessionLength);
+```
+
+#### The Payment Event
+
+```java
+FunPlusSDK.getFunPlusData().tracePayment(...);
+```
+
+The `tracePayment()` method is defined as below:
+
+```java
+class FunPlusData {...
+
+/**
+    Shall be called when user purchase some product.
+     
+    params amount:             Numeric value which corresponds to the cost of the purchase in the monetary unit multiplied by 100.
+    params currency:           The 3-letter ISO 4217 resource Code. [ISO4217](http://www.xe.com/iso4217.php)
+    params productId:          The ID of the product purchased.
+    params productName:        The name of the product purchased (optional).
+    params productType:        The type of the product purchased (optional).
+    params transactionId:      The unique transaction ID sent back by the payment processor.
+    params paymentProcessor:   The payment processor.
+    params itemsReceived:      A string of JSON array, consisting of one or more items received.
+    params currencyReceived:   A string of JSON array, consisting one or more types of currency received.
+ */
+public void tracePayment(double amount,
+                         String currency,
+                         String productId,
+                         String productName,
+                         String productType,
+                         String transactionId,
+                         String paymentProcessor,
+                         String itemsReceived,
+                         String currencyReceived);
+```
+
+The `itemsReceived` parameter contains one or more items received. It consists of the following required fields:
+
+- `d_item_id`: The item id
+- `d_item_name`: The item name
+- `d_item_type`: The type of item e.g. booster, lives, fertilizer
+- `m_item_amount`: The number of items received
+- `d_item_class`: The item class, one of - consumable or durable
+
+Example: 
+
+```json
+"c_items_received": [
+  {
+    "d_item_id":"4312",
+    "d_item_name":"booster_butterfly",
+    "d_item_type":"booster",
+    "m_item_amount":"1",
+    "d_item_class":"consumable"
+  }
+]
+```
+
+The `currencyReceived` parameter contains one or more types of currency received. It consists of the following required fields:
+
+- `m_currency_amount`: The virtual currency amount
+- `d_currency_type`: The type of virtual currency.
+
+Example:
+
+```json
+"c_currency_received": [
+  {
+    "d_currency_type":"rc",
+    "m_currency_amount":"20"
+  },
+  {
+    "d_currency_type":"coins",
+    "m_currency_amount":"2000"
+  }
+]
+```
+
+#### Trace a Custom Event
+
+```java
+FunPlusSDK.getFunPlusData().traceCustom(event);
 ```
 
 Besides those four KPI events, you might want to trace some custom events. Call the `traceCustom()` method to achieve this task.
