@@ -28,7 +28,6 @@
     * [The Payment Event](#the-payment-event)
     * [Trace a Custom Event](#trace-a-custom-event)
     * [Set Extra Properties to Data Events](#set-extra-properties-to-data-events)
-    * [Manually trace session events](#manually-trace-session-events)
 * [FAQ](#faq)
 
 ## Integration
@@ -243,7 +242,7 @@ The Data module traces client events and uploads them to FunPlus BI System.
 
 #### Session Starts and Ends
 
-Note: If the `dataAutoTraceSessionEvents` configuration field is set to `true`, SDK will trace `session_start` and `session_end` event automatically.
+Note: If the `dataAutoTraceSessionEvents` configuration field is set to `true`, SDK will trace `session_start` and `session_end` event automatically. Otherwise, you need to call these two methods at correct points to trace session events.
 
 ```java
 FunPlusSDK.getFunPlusData().traceSessionStart();
@@ -364,20 +363,6 @@ FunPlusSDK.getFunPlusData().eraseExtraProperty(key);
 ```
 
 Keep in mind that a second calling of the `setExtraProperty()` method will override the previous set value.
-
-#### Manually trace session events
-
-By default, SDK automatically traces the `session_start` and `session_end` events. This behavior can be changed by override the `dataAutoTraceSessionEvents` config value to false.
-
-Then you need to manually trace these events.
-
-```java
-FunPlusSDK.getFunPlusData().traceSessionStart();
-...
-FunPlusSDK.getFunPlusData().traceSessionEnd(long sessionLength);
-```
-
-Note that don't manually trace these events when `dataAutoTraceSessionEvents` is set to true.
 
 ## FAQ
 
