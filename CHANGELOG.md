@@ -1,5 +1,9 @@
 # Changelog
 
+### v4.0.4
+
+* Refactor: allow `null` values for `product_name` and `product_type` in `FunPlusData.tracePayment()`.
+
 ### v4.0.3
 
 * Bugfix: sychronized getter methods for `FunPlusFactory`.
