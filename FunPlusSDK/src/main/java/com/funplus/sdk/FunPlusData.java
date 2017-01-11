@@ -158,12 +158,15 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
     public void tracePayment(double amount,
                              @NonNull String currency,
                              @NonNull String productId,
-                             @NonNull String productName,
-                             @NonNull String productType,
+                             @Nullable String productName,
+                             @Nullable String productType,
                              @NonNull String transactionId,
                              @NonNull String paymentProcessor,
                              @NonNull String itemsReceived,
                              @NonNull String currencyReceived) {
+        productName = (productName == null) ? "" : productName;
+        productType = (productType == null) ? "" : productType;
+
         try {
             JSONObject customProperties = new JSONObject();
             customProperties.put("amount", amount);
