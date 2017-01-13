@@ -162,10 +162,29 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
                              @Nullable String productType,
                              @NonNull String transactionId,
                              @NonNull String paymentProcessor,
-                             @NonNull String itemsReceived,
-                             @NonNull String currencyReceived) {
+                             @Nullable String itemsReceived,
+                             @Nullable String currencyReceived) {
         productName = (productName == null) ? "" : productName;
         productType = (productType == null) ? "" : productType;
+
+        itemsReceived = (itemsReceived == null || itemsReceived.isEmpty()) ? "[]" : itemsReceived;
+        currencyReceived = (currencyReceived == null || currencyReceived.isEmpty()) ? "[]" : currencyReceived;
+
+        // Init with empty JSON arrays.
+        JSONArray cItemsReceived = new JSONArray();
+        JSONArray cCurrencyReceived = new JSONArray();
+
+        try {
+            cItemsReceived = new JSONArray(itemsReceived);
+        } catch (JSONException e) {
+            getLogger().e("Error parsing parameter: `itemsReceived`");
+        }
+
+        try {
+            cCurrencyReceived = new JSONArray(currencyReceived);
+        } catch (JSONException e) {
+            getLogger().e("Error parsing parameter: `currencyReceived`");
+        }
 
         try {
             JSONObject customProperties = new JSONObject();
@@ -176,8 +195,8 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
             customProperties.put("iap_product_type", productType);
             customProperties.put("transaction_id", transactionId);
             customProperties.put("payment_processor", paymentProcessor);
-            customProperties.put("c_items_received", new JSONArray(itemsReceived));
-            customProperties.put("c_currency_received", new JSONArray(currencyReceived));
+            customProperties.put("c_items_received", cItemsReceived);
+            customProperties.put("c_currency_received", cCurrencyReceived);
 
             trace(DataEventType.Kpi, buildDataEvent("payment", customProperties));
         } catch (JSONException e) {
