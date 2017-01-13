@@ -270,18 +270,18 @@ class FunPlusData {...
     params productType:        The type of the product purchased (optional).
     params transactionId:      The unique transaction ID sent back by the payment processor.
     params paymentProcessor:   The payment processor.
-    params itemsReceived:      A string of JSON array, consisting of one or more items received.
-    params currencyReceived:   A string of JSON array, consisting one or more types of currency received.
+    params itemsReceived:      A string of JSON array, consisting of one or more items received (optional).
+    params currencyReceived:   A string of JSON array, consisting one or more types of currency received (optional).
  */
 public void tracePayment(double amount,
-                         String currency,
-                         String productId,
-                         String productName,
-                         String productType,
-                         String transactionId,
-                         String paymentProcessor,
-                         String itemsReceived,
-                         String currencyReceived);
+                         @NonNull String currency,
+                         @NonNull String productId,
+                         @Nullable String productName,
+                         @Nullable String productType,
+                         @NonNull String transactionId,
+                         @NonNull String paymentProcessor,
+                         @Nullable String itemsReceived,
+                         @Nullable String currencyReceived);
 ```
 
 The `itemsReceived` parameter contains one or more items received. It consists of the following required fields:
