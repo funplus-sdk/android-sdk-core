@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * See <link>http://wiki.ifunplus.cn/display/BI/Business+Intelligence+Specification+v2.0</link>
+ */
 public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
 
     public enum DataEventType {
@@ -44,6 +47,11 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
     private final List<Pair<String, Date>> kpiTraceHistory = new ArrayList<>();
     private final List<Pair<String, Date>> customTraceHistory = new ArrayList<>();
 
+    /**
+     * Constructor.
+     *
+     * @param funPlusConfig     The config object.
+     */
     FunPlusData(@NonNull FunPlusConfig funPlusConfig) {
         this.funPlusConfig = funPlusConfig;
 
@@ -81,6 +89,11 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
         Log.i(LOG_TAG, "FunPlusData ready to work");
     }
 
+    /**
+     * Register a event listener.
+     *
+     * @param listener      The listener to be registered.
+     */
     @Override
     public void registerEventTracedListener(@NonNull EventTracedListener listener) {
         listeners.add(listener);
@@ -110,6 +123,9 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
         getLogger().i("Trace Data event: " + event);
     }
 
+    /**
+     * Trace a `session_start` event.
+     */
     @Override
     public void traceSessionStart() {
         try {
@@ -119,6 +135,11 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
         }
     }
 
+    /**
+     * Trace a `session_end` event.
+     *
+     * @param sessionLength     Length of the ending session.
+     */
     @Override
     public void traceSessionEnd(long sessionLength) {
         try {
@@ -131,6 +152,9 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
         }
     }
 
+    /**
+     * Trace a `new_user` event.
+     */
     @Override
     public void traceNewUser() {
         try {
@@ -140,6 +164,11 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
         }
     }
 
+    /**
+     * Trace a custom event.
+     *
+     * @param event     The event to be traced.
+     */
     @Override
     public void traceCustom(@NonNull JSONObject event) {
         trace(DataEventType.Custom, event);
@@ -154,6 +183,23 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
         }
     }
 
+    /**
+     * Trace a Data payment event.
+     *
+     * @param amount                Numeric value which corresponds to the cost of the purchase
+     *                              in the monetary unit multiplied by 100.
+     * @param currency              The 3-letter ISO 4217 resource Code. See
+     *                              <link>http://www.xe.com/iso4217.php</link>
+     * @param productId             The ID of the product purchased.
+     * @param productName           The name of the product purchased (optional).
+     * @param productType           The type of the product purchased (optional).
+     * @param transactionId         The unique transaction ID sent back by the payment processor.
+     * @param paymentProcessor      The payment processor.
+     * @param itemsReceived         A string of JSON array, consisting of one or more items
+     *                              received (optional).
+     * @param currencyReceived      A string of JSON array, consisting one or more types of
+     *                              currency received (optional).
+     */
     @Override
     public void tracePayment(double amount,
                              @NonNull String currency,
@@ -266,12 +312,23 @@ public class FunPlusData implements IFunPlusData, SessionStatusChangeListener {
         traceSessionStart();
     }
 
+    /**
+     * Set extra property to Data events.
+     *
+     * @param key       The property key.
+     * @param value     The property value.
+     */
     @Override
     public void setExtraProperty(@NonNull String key, @NonNull String value) {
         extraProperties.put(key, value);
         ObjectReaderWriter.writeObject(extraProperties, funPlusConfig, EXTRA_PROPERTIES_FILE, "DataExtraProperties");
     }
 
+    /**
+     * Erase an extra property.
+     *
+     * @param key       Key of the property to be erased.
+     */
     @Override
     public void eraseExtraProperty(@NonNull String key) {
         if (extraProperties.containsKey(key)) {

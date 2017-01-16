@@ -18,6 +18,9 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The <code>LogAgentClient</code> class is used to cache logs and timely upload them.
+ */
 class LogAgentClient extends HandlerThread implements Application.ActivityLifecycleCallbacks {
     private static final String LOG_TAG = "LogAgentClient";
 
@@ -47,6 +50,17 @@ class LogAgentClient extends HandlerThread implements Application.ActivityLifecy
     @Nullable private Timer timer;
     private long uploadInterval;
 
+    /**
+     * Constructor.
+     *
+     * @param funPlusConfig     The config object.
+     * @param label             A globally unique label.
+     * @param endpoint          The endpoint of Log Agent.
+     * @param tag               The Log Agent tag.
+     * @param key               The Log Agent key.
+     * @param progressHandler   Progress callback.
+     * @param uploadInterval    The uploading interval.
+     */
     LogAgentClient(@NonNull FunPlusConfig funPlusConfig,
                    @NonNull String label,
                    @NonNull String endpoint,
@@ -80,6 +94,16 @@ class LogAgentClient extends HandlerThread implements Application.ActivityLifecy
         startTimer();
     }
 
+    /**
+     * Constructor.
+     *
+     * @param funPlusConfig     The config object.
+     * @param label             A globally unique label.
+     * @param endpoint          The endpoint of Log Agent.
+     * @param tag               The Log Agent tag.
+     * @param key               The Log Agent key.
+     * @param progressHandler   Progress callback.
+     */
     LogAgentClient(@NonNull FunPlusConfig funPlusConfig,
                    @NonNull String label,
                    @NonNull String endpoint,
@@ -89,6 +113,11 @@ class LogAgentClient extends HandlerThread implements Application.ActivityLifecy
         this(funPlusConfig, label, endpoint, tag, key, progressHandler, DEFAULT_UPLOAD_INTERVAL);
     }
 
+    /**
+     * Trace an entry.
+     *
+     * @param entry     The entry to be traced.
+     */
     void trace(@Nullable final String entry) {
         if (entry == null) {
             Log.e(LOG_TAG, "Failed to trace: log entry must not be null");
@@ -106,6 +135,11 @@ class LogAgentClient extends HandlerThread implements Application.ActivityLifecy
         });
     }
 
+    /**
+     * Trace a list of entries.
+     *
+     * @param entries   The entry list to be traced.
+     */
     void trace(@NonNull List<String> entries) {
         for (String entry : entries) {
             trace(entry);

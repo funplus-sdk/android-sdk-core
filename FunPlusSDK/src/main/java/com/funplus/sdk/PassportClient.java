@@ -23,6 +23,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * The <code>PassportClient</code> class communicates with the Passport Server. It is responsible
+ * for sending request to the Passport Server and validate and parse the response.
+ */
 class PassportClient {
     private static final String CURRENT_FPID_SAVED_KEY = "com.funplus.sdk.CurrentFPID";
 
@@ -34,6 +38,11 @@ class PassportClient {
     @NonNull private final FunPlusConfig funPlusConfig;
     @NonNull private String currentFPID;
 
+    /**
+     * Constructor.
+     *
+     * @param funPlusConfig     The config object.
+     */
     PassportClient(@NonNull FunPlusConfig funPlusConfig) {
         this.funPlusConfig = funPlusConfig;
 
@@ -47,10 +56,22 @@ class PassportClient {
         }
     }
 
+    /**
+     * Get current FPID.
+     *
+     * @return  Current FPID.
+     */
     @NonNull String getCurrentFPID() {
         return currentFPID;
     }
 
+    /**
+     * Get (retrieve or create) the FPID associated with given external user ID.
+     *
+     * @param externalID        The external user ID.
+     * @param externalIDType    Type of the external user ID.
+     * @param completion        The completion callback.
+     */
     void get(@NonNull String externalID,
              @NonNull FunPlusID.ExternalIDType externalIDType,
              @NonNull FunPlusID.FunPlusIDHandler completion) {
@@ -63,6 +84,14 @@ class PassportClient {
         request(params, completion);
     }
 
+    /**
+     * Bind the given external user ID to given FPID.
+     *
+     * @param fpid              The FPID.
+     * @param externalID        The external user ID.
+     * @param externalIDType    Type of the external user ID.
+     * @param completion        The completion callback.
+     */
     void bind(@NonNull String fpid,
               @NonNull String externalID,
               @NonNull FunPlusID.ExternalIDType externalIDType,

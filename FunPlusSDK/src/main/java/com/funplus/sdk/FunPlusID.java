@@ -44,10 +44,22 @@ public class FunPlusID implements IFunPlusID {
 
     @NonNull private final PassportClient passportClient;
 
+    /**
+     * Constructor.
+     *
+     * @param funPlusConfig     The config object.
+     */
     FunPlusID(@NonNull FunPlusConfig funPlusConfig) {
         passportClient = new PassportClient(funPlusConfig);
     }
 
+    /**
+     * Get (retrieve or create) the FPID associated with given external user ID.
+     *
+     * @param externalID        The external user ID.
+     * @param externalIDType    Type of the external user ID.
+     * @param completion        The completion callback.
+     */
     @Override
     public void get(@NonNull String externalID,
                     @NonNull ExternalIDType externalIDType,
@@ -55,6 +67,14 @@ public class FunPlusID implements IFunPlusID {
         passportClient.get(externalID, externalIDType, completion);
     }
 
+    /**
+     * Bind the given external user ID to given FPID.
+     *
+     * @param fpid              The FPID.
+     * @param externalID        The external user ID.
+     * @param externalIDType    Type of the external user ID.
+     * @param completion        The completion callback.
+     */
     @Override
     public void bind(@NonNull String fpid,
                      @NonNull String externalID,
@@ -63,6 +83,11 @@ public class FunPlusID implements IFunPlusID {
         passportClient.bind(fpid, externalID, externalIDType, completion);
     }
 
+    /**
+     * Get the current FPID.
+     *
+     * @return  Current FPID.
+     */
     @Override
     @NonNull public String getCurrentFPID() {
         return passportClient.getCurrentFPID();

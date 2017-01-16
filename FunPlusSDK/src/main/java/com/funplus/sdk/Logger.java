@@ -12,6 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * The <code>Logger</code> class is used to collect SDK internal logs.
+ */
 class Logger implements ILogger {
     private static final String LOG_TAG = "FunPlusSDK";
     private static final int MAX_QUEUE_SIZE = 1024;
@@ -20,12 +23,23 @@ class Logger implements ILogger {
     @NonNull private final LogLevel logLevel;
     @NonNull private final List<String> logs;
 
+    /**
+     * Constructor.
+     *
+     * @param funPlusConfig     The config object.
+     */
     Logger(@NonNull FunPlusConfig funPlusConfig) {
         this.funPlusConfig = funPlusConfig;
         this.logLevel = funPlusConfig.logLevel;
         this.logs = new ArrayList<>();
     }
 
+    /**
+     * Trace a message with INFO level.
+     *
+     * @param message       The log message.
+     * @param parameters    The parameters.
+     */
     @Override
     public void i(@NonNull String message, Object... parameters) {
         if (logLevel.getAndroidLogLevel() <= Log.INFO) {
@@ -35,6 +49,12 @@ class Logger implements ILogger {
         }
     }
 
+    /**
+     * Trace a message with WARN level.
+     *
+     * @param message       The log message.
+     * @param parameters    The parameters.
+     */
     @Override
     public void w(@NonNull String message, Object... parameters) {
         if (logLevel.getAndroidLogLevel() <= Log.WARN) {
@@ -44,6 +64,12 @@ class Logger implements ILogger {
         }
     }
 
+    /**
+     * Trace a message with ERROR level.
+     *
+     * @param message       The log message.
+     * @param parameters    The parameters.
+     */
     @Override
     public void e(@NonNull String message, Object... parameters) {
         if (logLevel.getAndroidLogLevel() <= Log.ERROR) {
@@ -53,6 +79,12 @@ class Logger implements ILogger {
         }
     }
 
+    /**
+     * Trace a message with Fatal level. The name "wtf" stands for "what a terrible failure".
+     *
+     * @param message       The log message.
+     * @param parameters    The parameters.
+     */
     @Override
     public void wtf(@NonNull String message, Object... parameters) {
         if (logLevel.getAndroidLogLevel() <= Log.ASSERT) {
@@ -62,6 +94,11 @@ class Logger implements ILogger {
         }
     }
 
+    /**
+     * Get the logs to consume.
+     *
+     * @return  A list of logs.
+     */
     @NonNull public synchronized List<String> consumeLogs() {
         List<String> l = new ArrayList<>(logs);
         logs.clear();
