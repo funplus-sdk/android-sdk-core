@@ -12,6 +12,9 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The <code>LoggerDataConsumer</code> is used to upload SDK internal logs to Log Agent.
+ */
 class LoggerDataConsumer implements Application.ActivityLifecycleCallbacks {
     private static final String LOG_TAG = "LoggerDataConsumer";
 
@@ -23,6 +26,11 @@ class LoggerDataConsumer implements Application.ActivityLifecycleCallbacks {
 
     @Nullable private Timer timer;
 
+    /**
+     * Constructor.
+     *
+     * @param funPlusConfig     The config object.
+     */
     LoggerDataConsumer(@NonNull FunPlusConfig funPlusConfig) {
         this.funPlusConfig = funPlusConfig;
 
@@ -40,6 +48,9 @@ class LoggerDataConsumer implements Application.ActivityLifecycleCallbacks {
         startTimer();
     }
 
+    /**
+     * Consume what Logger produces.
+     */
     void consume() {
         List<String> logsToBeConsumed = FunPlusFactory.getLogger(funPlusConfig).consumeLogs();
 

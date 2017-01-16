@@ -16,9 +16,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Locale;
 
+/**
+ * The <code>ObjectReaderWriter</code> is used for object serialization.
+ */
 class ObjectReaderWriter {
     private static final String LOG_TAG = "ObjectReaderWriter";
 
+    /**
+     * Read an object from file.
+     *
+     * @param funPlusConfig     The config object.
+     * @param filename          The file name.
+     * @param objectName        The object name.
+     * @param type              The object type.
+     * @param <T>               The generic type.
+     * @return                  The retrieved object or null.
+     */
     @Nullable static <T> T readObject(@NonNull FunPlusConfig funPlusConfig,
                                       @NonNull String filename,
                                       @NonNull String objectName,
@@ -61,6 +74,15 @@ class ObjectReaderWriter {
         return object;
     }
 
+    /**
+     * Write an object to file.
+     *
+     * @param object            The object to be written.
+     * @param funPlusConfig     The config object.
+     * @param filename          The file name.
+     * @param objectName        The object name.
+     * @param <T>               The generic type.
+     */
     static <T> void writeObject(@NonNull T object,
                                 @NonNull FunPlusConfig funPlusConfig,
                                 @NonNull String filename,

@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+/**
+ * The <code>PlayServiceHelper</code> helps to retrieve device's Google Play Advertising ID.
+ */
 class PlayServicesHelper {
     private static final String LOG_TAG = "PlayServicesHelper";
 
@@ -14,6 +17,12 @@ class PlayServicesHelper {
         void onPlayAdIdRead(String playAdId);
     }
 
+    /**
+     * Get the Google Play Advertising ID, blocking.
+     *
+     * @param context   The current context.
+     * @return          The Google Play Advertising ID, or null.
+     */
     @Nullable static String getPlayAdId(@NonNull Context context) {
         try {
             Object advertisingIdInfoObject = Reflection.invokeStaticMethod(
@@ -29,6 +38,12 @@ class PlayServicesHelper {
         }
     }
 
+    /**
+     * Get the Google Play Advertising ID, non blocking.
+     *
+     * @param context   The current context.
+     * @param listener  The result listener.
+     */
     static void getPlayAdId(@NonNull Context context, @NonNull final PlayAdIdReadListener listener) {
         if (Looper.myLooper() != Looper.getMainLooper()) {
             Log.i(LOG_TAG, "Reading GoogleAdId in background thread");

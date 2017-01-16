@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * See <link>http://wiki.ifunplus.cn/display/ops/Rum+Crumb+Event</link>
+ */
 public class FunPlusRUM implements IFunPlusRUM, Application.ActivityLifecycleCallbacks {
     private static final String LOG_TAG = "FunPlusRUM";
     private static final String LOGGER_LABEL = "com.funplus.sdk.FunPlusRUM";
@@ -38,6 +41,11 @@ public class FunPlusRUM implements IFunPlusRUM, Application.ActivityLifecycleCal
     private final List<Pair<String, Date>> traceHistory = new ArrayList<>();
     private final List<Pair<String, Date>> suppressHistory = new ArrayList<>();
 
+    /**
+     * Constructor.
+     *
+     * @param funPlusConfig     The config object.
+     */
     FunPlusRUM(@NonNull FunPlusConfig funPlusConfig) {
         this.funPlusConfig = funPlusConfig;
 
@@ -97,6 +105,9 @@ public class FunPlusRUM implements IFunPlusRUM, Application.ActivityLifecycleCal
         }
     }
 
+    /**
+     * Trace an `app_background` event.
+     */
     @Override
     public void traceAppBackground() {
         try {
@@ -106,6 +117,9 @@ public class FunPlusRUM implements IFunPlusRUM, Application.ActivityLifecycleCal
         }
     }
 
+    /**
+     * Trace an `app_foreground` event.
+     */
     @Override
     public void traceAppForeground() {
         try {
@@ -115,6 +129,12 @@ public class FunPlusRUM implements IFunPlusRUM, Application.ActivityLifecycleCal
         }
     }
 
+    /**
+     * Trace a `network_switch` event.
+     *
+     * @param sourceState       The previous network state.
+     * @param currentState      The current network state.
+     */
     @Override
     public void traceNetworkSwitch(@NonNull String sourceState,
                                    @NonNull String currentState) {
@@ -128,6 +148,22 @@ public class FunPlusRUM implements IFunPlusRUM, Application.ActivityLifecycleCal
             getLogger().e("Error tracing network switch event: %s", e.getMessage());
         }
     }
+
+    /**
+     * Trace a `service_monitoring` event.
+     *
+     * @param serviceName       Name of the service.
+     * @param httpUrl           Requesting URL of the service.
+     * @param httpStatus        The request status (not HTTP response status code).
+     * @param requestSize       Size of the request body.
+     * @param responseSize      Size of the response body.
+     * @param httpLatency       The request duration (in milliseconds).
+     * @param requestTs         Timestamp when the request is started.
+     * @param responseTs        Timestamp when the response is fully received.
+     * @param requestId         Identifier of current request.
+     * @param targetUserId      The target user ID, see RUM spec.
+     * @param gameServerId      The game server ID, see RUM spec.
+     */
     @Override
     public void traceServiceMonitoring(@NonNull String serviceName,
                                        @NonNull String httpUrl,
@@ -207,12 +243,23 @@ public class FunPlusRUM implements IFunPlusRUM, Application.ActivityLifecycleCal
         return FunPlusFactory.getLogger(funPlusConfig);
     }
 
+    /**
+     * Set extra property for RUM events.
+     *
+     * @param key       The property key.
+     * @param value     The property value.
+     */
     @Override
     public void setExtraProperty(@NonNull String key, @NonNull String value) {
         extraProperties.put(key, value);
         ObjectReaderWriter.writeObject(extraProperties, funPlusConfig, EXTRA_PROPERTIES_FILE, "RUMExtraProperties");
     }
 
+    /**
+     * Erase an extra property.
+     *
+     * @param key       Key of the property to be erased.
+     */
     @Override
     public void eraseExtraProperty(@NonNull String key) {
         if (extraProperties.containsKey(key)) {

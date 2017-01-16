@@ -2,6 +2,9 @@ package com.funplus.sdk;
 
 import android.util.Log;
 
+/**
+ * Log levels.
+ */
 enum LogLevel {
     INFO(Log.INFO),
     WARN(Log.WARN),
@@ -18,6 +21,12 @@ enum LogLevel {
         return androidLogLevel;
     }
 
+    /**
+     * Construct a <code>LogLevel</code> instance by using given string.
+     *
+     * @param logLevelString    The given string.
+     * @return                  The <code>LogLevel</code> instance, default is ERROR.
+     */
     static LogLevel factory(String logLevelString) {
         switch (logLevelString) {
             case "info":

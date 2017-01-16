@@ -11,6 +11,9 @@ import org.json.JSONException;
 
 import java.util.List;
 
+/**
+ * The SDK entrance.
+ */
 public class FunPlusSDK {
 
     public static final String VERSION = "4.0.4";
@@ -24,6 +27,16 @@ public class FunPlusSDK {
     // Data events are interested in app's install timestamp.
     private long installTs;
 
+    /**
+     * Install the SDK.
+     *
+     * @param context       The current context.
+     * @param appId         The FunPlus app ID.
+     * @param appKey        The FunPlus app key.
+     * @param rumTag        The RUM tag.
+     * @param rumKey        The RUM key.
+     * @param environment   The running environment.
+     */
     public static synchronized void install(@NonNull Context context,
                                             @NonNull String appId,
                                             @NonNull String appKey,
@@ -38,6 +51,11 @@ public class FunPlusSDK {
         }
     }
 
+    /**
+     * Install the SDK by using given config object.
+     *
+     * @param funPlusConfig     The config object.
+     */
     public static synchronized void install(@NonNull FunPlusConfig funPlusConfig){
         if (instance == null) {
             Log.i(LOG_TAG, String.format("Installing FunPlus SDK: {sdkVersion=%s, appId=%s, env=%s}", VERSION, funPlusConfig.appId, funPlusConfig.environment));
@@ -79,6 +97,11 @@ public class FunPlusSDK {
         FunPlusFactory.getFunPlusData(funPlusConfig);
     }
 
+    /**
+     * Register activity lifecycle callbacks.
+     *
+     * @param application   The Android application instance.
+     */
     public static void registerActivityLifecycleCallbacks(@NonNull Application application) {
         ActivityLifecycleCallbacksProxy proxy = FunPlusFactory.getActivityLifecycleCallbacksProxy();
         List<Application.ActivityLifecycleCallbacks> instancesToRegister = proxy.getInstancesToRegister();
@@ -92,6 +115,11 @@ public class FunPlusSDK {
         return instance == null ? 0 : instance.installTs;
     }
 
+    /**
+     * Get the shared instance of <code>FunPlusID</code>.
+     *
+     * @return  The <code>FunPlusID</code> instance.
+     */
     @NonNull public static IFunPlusID getFunPlusID() {
         if (instance == null) {
             Log.e(LOG_TAG, "FunPlus SDK has not been installed yet.");
@@ -99,6 +127,11 @@ public class FunPlusSDK {
         return FunPlusFactory.getFunPlusID(instance.funPlusConfig);
     }
 
+    /**
+     * Get the shared instance of <code>FunPlusRUM</code>.
+     *
+     * @return  The <code>FunPlusRUM</code> instance.
+     */
     @NonNull public static IFunPlusRUM getFunPlusRUM() {
         if (instance == null) {
             Log.e(LOG_TAG, "FunPlus SDK has not been installed yet.");
@@ -106,6 +139,11 @@ public class FunPlusSDK {
         return FunPlusFactory.getFunPlusRUM(instance.funPlusConfig);
     }
 
+    /**
+     * Get the shared instance of <code>FunPlusData</code>.
+     *
+     * @return  The <code>FunPlusData</code> instance.
+     */
     @NonNull public static IFunPlusData getFunPlusData() {
         if (instance == null) {
             Log.e(LOG_TAG, "FunPlus SDK has not been installed yet.");

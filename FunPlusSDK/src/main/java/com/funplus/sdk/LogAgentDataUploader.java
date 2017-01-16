@@ -17,6 +17,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * See <link>http://wiki.ifunplus.cn/display/core/http+log+agent+API</link>
+ */
 class LogAgentDataUploader {
     private static final String LOG_TAG = "LogAgentDataUploader";
     private static final int MAX_BATCH_SIZE = 100;
@@ -38,6 +41,14 @@ class LogAgentDataUploader {
     @NonNull private final String tag;
     @NonNull private final String key;
 
+    /**
+     * Constructor.
+     *
+     * @param funPlusConfig     The config object.
+     * @param endpoint          The requesting endpoint.
+     * @param tag               The Log Agent tag.
+     * @param key               The Log Agent key.
+     */
     LogAgentDataUploader(@NonNull FunPlusConfig funPlusConfig,
                          @NonNull String endpoint,
                          @NonNull String tag,
@@ -48,6 +59,12 @@ class LogAgentDataUploader {
         this.key = key;
     }
 
+    /**
+     * Upload data.
+     *
+     * @param data                  The data to be uploaded.
+     * @param completionHandler     The completion handler.
+     */
     void upload(@NonNull List<String> data,
                 @NonNull CompletionHandler completionHandler) {
         uploadInternal(data, completionHandler, data.size(), 0);

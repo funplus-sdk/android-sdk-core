@@ -36,6 +36,11 @@ class DeviceInfo {
     @NonNull final String hardwareName;
     @Nullable String playAdId;
 
+    /**
+     * Constructor.
+     *
+     * @param context       The current context.
+     */
     DeviceInfo(@NonNull Context context) {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
@@ -56,6 +61,12 @@ class DeviceInfo {
         playAdId = getPlayAdId(context);
     }
 
+    /**
+     * Get app's version.
+     *
+     * @param context       The current context.
+     * @return              App's version.
+     */
     @NonNull private String getAppVersion(@NonNull Context context) {
         try {
             PackageManager pm = context.getPackageManager();
@@ -71,6 +82,12 @@ class DeviceInfo {
         }
     }
 
+    /**
+     * Get device type.
+     *
+     * @param screenLayout      The screen layout.
+     * @return                  Device type.
+     */
     @NonNull private String getDeviceType(int screenLayout) {
         int screenSize = screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
@@ -86,6 +103,12 @@ class DeviceInfo {
         }
     }
 
+    /**
+     * Get Google Play Advertising ID.
+     *
+     * @param context       The current context.
+     * @return              The Google Play Advertising ID.
+     */
     @Nullable private static String getPlayAdId(@NonNull Context context) {
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String playAdId = preferences.getString(PLAY_AD_ID_SAVED_KEY, null);
@@ -104,6 +127,12 @@ class DeviceInfo {
         return playAdId;
     }
 
+    /**
+     * Calculate the MD5 hash for given text.
+     *
+     * @param text      The given text.
+     * @return          The MD5 hash.
+     */
     @Nullable static String MD5(@NonNull String text) {
         try {
             byte[] bytes = text.getBytes("UTF-8");
@@ -120,6 +149,13 @@ class DeviceInfo {
         }
     }
 
+    /**
+     * Encrypt given text using HMACSha256.
+     *
+     * @param plain     The plain text.
+     * @param key       The key.
+     * @return          The cipher text.
+     */
     @Nullable static String encryptHMACSha256(@NonNull String plain,
                                               @NonNull String key) {
         try {
