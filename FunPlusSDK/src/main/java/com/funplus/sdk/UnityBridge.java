@@ -138,8 +138,17 @@ public class UnityBridge {
         FunPlusID.ExternalIDType externalIDType = FunPlusID.ExternalIDType.construct(externalIDTypeString);
         FunPlusSDK.getFunPlusID().get(externalID, externalIDType, new FunPlusID.FunPlusIDHandler() {
             @Override
-            public void onSuccess(String fpid) {
-                sendUnityMessage("onGetFPIDSuccess", fpid);
+            public void onSuccess(String fpid, String sessionKey, long expireIn) {
+                try {
+                    JSONObject json = new JSONObject();
+                    json.put("fpid", fpid);
+                    json.put("session_key", sessionKey);
+                    json.put("session_expire_in", expireIn);
+
+                    sendUnityMessage("onGetFPIDSuccess", json.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -162,8 +171,17 @@ public class UnityBridge {
         FunPlusID.ExternalIDType externalIDType = FunPlusID.ExternalIDType.construct(externalIDTypeString);
         FunPlusSDK.getFunPlusID().bind(fpid, externalID, externalIDType, new FunPlusID.FunPlusIDHandler() {
             @Override
-            public void onSuccess(String fpid) {
-                sendUnityMessage("onBindFPIDSuccess", fpid);
+            public void onSuccess(String fpid, String sessionKey, long expireIn) {
+                try {
+                    JSONObject json = new JSONObject();
+                    json.put("fpid", fpid);
+                    json.put("session_key", sessionKey);
+                    json.put("session_expire_in", expireIn);
+
+                    sendUnityMessage("onBindFPIDSuccess", json.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

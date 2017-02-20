@@ -38,7 +38,7 @@ public class FunPlusID implements IFunPlusID {
     }
 
     public interface FunPlusIDHandler {
-        void onSuccess(String fpid);
+        void onSuccess(String fpid, String sessionKey, long expireIn);
         void onFailure(Error error);
     }
 

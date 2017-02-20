@@ -141,7 +141,14 @@ class PassportClient {
                         }
                     }
 
-                    completion.onSuccess(fpid);
+                    String sessionKey = data.getString("session_key");
+                    if (sessionKey == null) {
+                        sessionKey = "";
+                    }
+
+                    long expireIn = data.getLong("session_expire_in");
+
+                    completion.onSuccess(fpid, sessionKey, expireIn);
                 } catch (JSONException e) {
                     completion.onFailure(FunPlusID.Error.ParseError);
                 }
